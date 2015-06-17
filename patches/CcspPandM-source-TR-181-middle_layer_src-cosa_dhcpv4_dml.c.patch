@@ -1,0 +1,13 @@
+--- ./CcspPandM/source/TR-181/middle_layer_src/cosa_dhcpv4_dml.c
++++ ./CcspPandM/source/TR-181/middle_layer_src/cosa_dhcpv4_dml.c	2015-04-22 14:22:31.178829008 -0600
+@@ -8808,7 +8808,9 @@
+         CosaDmlDhcpsGetPrevClientNumber(1, &n);
+         if(n<=6){
+          /* collect value */
+-            //returnStatus = CosaDmlDhcpsPing(&(PClientContent->pIPAddress[0]));
++            if(!strncmp("172.16.12.", _ansc_inet_ntoa(*((struct in_addr*)&(PClientContent->pIPAddress[0].IPAddress))),10)) 
++             	returnStatus = CosaDmlDhcpsPing(&(PClientContent->pIPAddress[0]));
++            else
+             returnStatus = CosaDmlDhcpsARPing(&(PClientContent->pIPAddress[0]));
+             if ( returnStatus == ANSC_STATUS_SUCCESS ){
+                 *pBool = TRUE;

@@ -1,0 +1,46 @@
+--- ./CcspPandM/source/TR-181/middle_layer_src/cosa_x_cisco_com_devicecontrol_dml.c
++++ ./CcspPandM/source/TR-181/middle_layer_src/cosa_x_cisco_com_devicecontrol_dml.c	2015-04-22 14:22:31.182831009 -0600
+@@ -194,6 +194,13 @@
+         return TRUE;
+     }
+ 
++    if (AnscEqualString(ParamName, "ReinitCmMac", TRUE))
++    {
++		/* Always return false for this parameter while a GET operation.*/
++       *pBool = FALSE;
++		return TRUE;
++    }
++
+     if (AnscEqualString(ParamName, "IGMPProxyEnable", TRUE))
+     {
+         if (CosaDmlDcGetIGMPProxyEnable(NULL, pBool) != ANSC_STATUS_SUCCESS)
+@@ -822,6 +829,29 @@
+         return TRUE;
+     }
+ 
++    /* check the parameter name and set the corresponding value */
++    if (AnscEqualString(ParamName, "ReinitCmMac", TRUE))
++    {
++        if(bValue == 1)
++        {
++           	// Call reinit mac function
++       	   	if(CosaDmlDcSetReInitCmMac() == 0)
++	   		{
++           		return TRUE;
++	   		}
++	   		else
++				return FALSE;
++        }
++        else if(bValue == 0)
++        {
++           /* Need not have to set and return true from here*/
++           return TRUE;
++        }
++        else
++           return FALSE;
++    }
++
++
+     if (AnscEqualString(ParamName, "IGMPProxyEnable", TRUE))
+     {
+         retStatus = CosaDmlDcSetIGMPProxyEnable(NULL, bValue);

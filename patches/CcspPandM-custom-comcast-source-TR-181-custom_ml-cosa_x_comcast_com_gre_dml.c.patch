@@ -1,0 +1,21 @@
+--- ./CcspPandM/custom/comcast/source/TR-181/custom_ml/cosa_x_comcast_com_gre_dml.c
++++ ./CcspPandM/custom/comcast/source/TR-181/custom_ml/cosa_x_comcast_com_gre_dml.c	2015-05-20 13:29:09.944854221 -0600
+@@ -81,6 +81,10 @@
+     if (AnscEqualString(ParamName, "DHCPCircuitIDSSID", TRUE))
+     {
+         *pBool = pGreIf->DHCPCircuitIDSSID;
++        if(pGreIf->DHCPCircuitIDSSID) {
++		// update  circuit ids 
++			hotspot_update_circuit_ids(1,1);
++	    }
+         return TRUE;
+     }
+     if (AnscEqualString(ParamName, "DHCPRemoteID", TRUE))
+@@ -178,6 +182,7 @@
+     }
+     if (AnscEqualString(ParamName, "ConnectedRemoteEndpoint", TRUE))
+     {
++		CosaDml_GreIfGetConnectedRemoteEndpoint(ins,pGreIf);
+         snprintf(pValue, *pUlSize, "%s", pGreIf->ConnectedRemoteEndpoint);
+         return 0;
+     }

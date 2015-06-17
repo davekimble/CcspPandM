@@ -1,0 +1,10 @@
+--- ./CcspPandM/source/TR-181/middle_layer_src/cosa_x_cisco_com_devicecontrol_internal.h
++++ ./CcspPandM/source/TR-181/middle_layer_src/cosa_x_cisco_com_devicecontrol_internal.h	2015-04-22 14:22:31.182831009 -0600
+@@ -136,6 +136,7 @@
+     UCHAR                                   FactoryReset[256];               \
+     UCHAR                                   UserChangedFlags[64];           \
+     BOOL                                    TelnetEnable;                   \
++    BOOL                                    ReinitCmMac;                       \
+     BOOL                                    SSHEnable;                      \
+     BOOL                                    HNAPEnable;                     \
+     BOOL                                    EnableZeroConfig;               \

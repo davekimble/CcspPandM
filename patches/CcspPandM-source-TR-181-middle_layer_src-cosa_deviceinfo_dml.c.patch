@@ -1,0 +1,557 @@
+--- ./CcspPandM/source/TR-181/middle_layer_src/cosa_deviceinfo_dml.c
++++ ./CcspPandM/source/TR-181/middle_layer_src/cosa_deviceinfo_dml.c	2015-05-20 13:29:09.944854221 -0600
+@@ -90,6 +90,7 @@
+  }
+  
+ ***********************************************************************/
++
+ /***********************************************************************
+ 
+  APIs for Object:
+@@ -257,8 +258,6 @@
+         *puLong = CosaDmlDiGetUpTime(NULL);
+         return TRUE;
+     }
+-
+-
+     /* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
+     return FALSE;
+ }
+@@ -433,6 +432,18 @@
+         return 0;
+     }
+ 
++    if( AnscEqualString(ParamName, "Hardware_MemUsed", TRUE))
++    {
++        CosaDmlDiGetHardware_MemUsed(NULL, pValue,pulSize);
++        return 0;
++    }
++
++    if( AnscEqualString(ParamName, "Hardware_MemFree", TRUE))
++    {
++        CosaDmlDiGetHardware_MemFree(NULL, pValue,pulSize);
++        return 0;
++    }
++
+     if( AnscEqualString(ParamName, "X_CISCO_COM_AdvancedServices", TRUE))
+     {
+ 
+@@ -661,7 +672,25 @@
+         AnscCopyString(pMyObject->ProvisioningCode, pString);
+         return TRUE;
+     }
++#ifdef CONFIG_INTERNET2.0
++    if( AnscEqualString(ParamName, "X_RDKCENTRAL-COM_CloudUIWebURL", TRUE))
++    {
++	if (syscfg_set(NULL, "redirection_url", pString) != 0) {
++             AnscTraceWarning(("syscfg_set failed\n"));
++          } else {
++	       if (syscfg_commit() != 0) {
++                    AnscTraceWarning(("syscfg_commit failed\n"));
++                    }
++		char url[150];	
++		snprintf(url,sizeof(url),"/etc/whitelist.sh %s",pString);
++		system(url);
++		AnscCopyString(pMyObject->WebURL, pString);
++             }
+ 
++	return TRUE;
++
++    }
++#endif
+ 
+     /* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
+     return FALSE;
+@@ -1819,6 +1848,13 @@
+     }
+ 
+ 
++    if( AnscEqualString(ParamName, "Used", TRUE))
++    {
++        /* collect value */
++        *puLong = COSADmlGetMemoryStatus(ParamName);
++        return TRUE;
++    }
++
+     /* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
+     return FALSE;
+ }
+@@ -1876,6 +1912,478 @@
+     return -1;
+ }
+ 
++
++
++/***********************************************************************
++
++ APIs for Object:
++
++    DeviceInfo.X_RDKCENTRAL-COM.
++
++    *  X_RDKCENTRAL-COM_GetParamBoolValue
++    *  X_RDKCENTRAL-COM_GetParamIntValue
++    *  X_RDKCENTRAL-COM_GetParamUlongValue
++    *  X_RDKCENTRAL-COM_GetParamStringValue
++
++***********************************************************************/
++/**********************************************************************  
++
++    caller:     owner of this object 
++
++    prototype: 
++
++        BOOL
++        X_RDKCENTRAL-COM_GetParamBoolValue
++            (
++                ANSC_HANDLE                 hInsContext,
++                char*                       ParamName,
++                BOOL*                       pBool
++            );
++
++    description:
++
++        This function is called to retrieve Boolean parameter value; 
++
++    argument:   ANSC_HANDLE                 hInsContext,
++                The instance handle;
++
++                char*                       ParamName,
++                The parameter name;
++
++                BOOL*                       pBool
++                The buffer of returned boolean value;
++
++    return:     TRUE if succeeded.
++
++**********************************************************************/
++BOOL
++X_RDKCENTRAL_COM_GetParamBoolValue
++    (
++        ANSC_HANDLE                 hInsContext,
++        char*                       ParamName,
++        BOOL*                       pBool
++    )
++{
++    /* check the parameter name and return the corresponding value */
++    return FALSE;
++}
++
++/**********************************************************************  
++
++    caller:     owner of this object 
++
++    prototype: 
++
++        BOOL
++        X_RDKCENTRAL-COM_GetParamIntValue
++            (
++                ANSC_HANDLE                 hInsContext,
++                char*                       ParamName,
++                int*                        pInt
++            );
++
++    description:
++
++        This function is called to retrieve integer parameter value; 
++
++    argument:   ANSC_HANDLE                 hInsContext,
++                The instance handle;
++
++                char*                       ParamName,
++                The parameter name;
++
++                int*                        pInt
++                The buffer of returned integer value;
++
++    return:     TRUE if succeeded.
++
++**********************************************************************/
++BOOL
++X_RDKCENTRAL_COM_GetParamIntValue
++    (
++        ANSC_HANDLE                 hInsContext,
++        char*                       ParamName,
++        int*                        pInt
++    )
++{
++    /* check the parameter name and return the corresponding value */
++    return FALSE;
++}
++
++/**********************************************************************  
++
++    caller:     owner of this object 
++
++    prototype: 
++
++        BOOL
++        X_RDKCENTRAL-COM_GetParamUlongValue
++            (
++                ANSC_HANDLE                 hInsContext,
++                char*                       ParamName,
++                ULONG*                      puLong
++            );
++
++    description:
++
++        This function is called to retrieve ULONG parameter value; 
++
++    argument:   ANSC_HANDLE                 hInsContext,
++                The instance handle;
++
++                char*                       ParamName,
++                The parameter name;
++
++                ULONG*                      puLong
++                The buffer of returned ULONG value;
++
++    return:     TRUE if succeeded.
++
++**********************************************************************/
++BOOL
++X_RDKCENTRAL_COM_GetParamUlongValue
++    (
++        ANSC_HANDLE                 hInsContext,
++        char*                       ParamName,
++        ULONG*                      puLong
++    )
++{
++    /* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
++    return FALSE;
++}
++
++/**********************************************************************  
++
++    caller:     owner of this object 
++
++    prototype: 
++
++        ULONG
++        X_RDKCENTRAL-COM_GetParamStringValue
++            (
++                ANSC_HANDLE                 hInsContext,
++                char*                       ParamName,
++                char*                       pValue,
++                ULONG*                      pUlSize
++            );
++
++    description:
++
++        This function is called to retrieve string parameter value; 
++
++    argument:   ANSC_HANDLE                 hInsContext,
++                The instance handle;
++
++                char*                       ParamName,
++                The parameter name;
++
++                char*                       pValue,
++                The string value buffer;
++
++                ULONG*                      pUlSize
++                The buffer of length of string value;
++                Usually size of 1023 will be used.
++                If it's not big enough, put required size here and return 1;
++
++    return:     0 if succeeded;
++                1 if short of buffer size; (*pUlSize = required size)
++                -1 if not supported.
++
++**********************************************************************/
++ULONG
++X_RDKCENTRAL_COM_GetParamStringValue
++    (
++        ANSC_HANDLE                 hInsContext,
++        char*                       ParamName,
++        char*                       pValue,
++        ULONG*                      pUlSize
++    )
++{
++    /* check the parameter name and return the corresponding value */
++    return -1;
++}
++
++/***********************************************************************
++
++ APIs for Object:
++
++    DeviceInfo.X_RDKCENTRAL-COM.Ops.{i}.
++
++    *  Ops_GetEntryCount
++    *  Ops_GetEntry
++    *  Ops_IsUpdated
++    *  Ops_Synchronize
++    *  Ops_GetParamBoolValue
++    *  Ops_GetParamIntValue
++    *  Ops_GetParamUlongValue
++    *  Ops_GetParamStringValue
++
++***********************************************************************/
++
++
++
++
++/**********************************************************************  
++
++    caller:     owner of this object 
++
++    prototype: 
++
++        BOOL
++        Ops_GetParamBoolValue
++            (
++                ANSC_HANDLE                 hInsContext,
++                char*                       ParamName,
++                BOOL*                       pBool
++            );
++
++    description:
++
++        This function is called to retrieve Boolean parameter value; 
++
++    argument:   ANSC_HANDLE                 hInsContext,
++                The instance handle;
++
++                char*                       ParamName,
++                The parameter name;
++
++                BOOL*                       pBool
++                The buffer of returned boolean value;
++
++    return:     TRUE if succeeded.
++
++**********************************************************************/
++BOOL
++Ops_GetParamBoolValue
++    (
++        ANSC_HANDLE                 hInsContext,
++        char*                       ParamName,
++        BOOL*                       pBool
++    )
++{
++
++    /* check the parameter name and return the corresponding value */
++    if( AnscEqualString(ParamName, "UploadLogsNow", TRUE))
++    {
++        /* collect value */
++         *pBool = FALSE;
++         
++        return TRUE;
++    }
++
++    /* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
++    return FALSE;
++}
++
++/**********************************************************************  
++
++    caller:     owner of this object 
++
++    prototype: 
++
++        BOOL
++        Ops_GetParamIntValue
++            (
++                ANSC_HANDLE                 hInsContext,
++                char*                       ParamName,
++                int*                        pInt
++            );
++
++    description:
++
++        This function is called to retrieve integer parameter value; 
++
++    argument:   ANSC_HANDLE                 hInsContext,
++                The instance handle;
++
++                char*                       ParamName,
++                The parameter name;
++
++                int*                        pInt
++                The buffer of returned integer value;
++
++    return:     TRUE if succeeded.
++
++**********************************************************************/
++BOOL
++Ops_GetParamIntValue
++    (
++        ANSC_HANDLE                 hInsContext,
++        char*                       ParamName,
++        int*                        pInt
++    )
++{
++    /* check the parameter name and return the corresponding value */
++    /* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
++    return FALSE;
++}
++
++/**********************************************************************  
++
++    caller:     owner of this object 
++
++    prototype: 
++
++        BOOL
++        Ops_GetParamUlongValue
++            (
++                ANSC_HANDLE                 hInsContext,
++                char*                       ParamName,
++                ULONG*                      puLong
++            );
++
++    description:
++
++        This function is called to retrieve ULONG parameter value; 
++
++    argument:   ANSC_HANDLE                 hInsContext,
++                The instance handle;
++
++                char*                       ParamName,
++                The parameter name;
++
++                ULONG*                      puLong
++                The buffer of returned ULONG value;
++
++    return:     TRUE if succeeded.
++
++**********************************************************************/
++BOOL
++Ops_GetParamUlongValue
++    (
++        ANSC_HANDLE                 hInsContext,
++        char*                       ParamName,
++        ULONG*                      puLong
++    )
++{
++	
++    /* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
++    return FALSE;
++}
++
++/**********************************************************************  
++
++    caller:     owner of this object 
++
++    prototype: 
++
++        ULONG
++        Ops_GetParamStringValue
++            (
++                ANSC_HANDLE                 hInsContext,
++                char*                       ParamName,
++                char*                       pValue,
++                ULONG*                      pUlSize
++            );
++
++    description:
++
++        This function is called to retrieve string parameter value; 
++
++    argument:   ANSC_HANDLE                 hInsContext,
++                The instance handle;
++
++                char*                       ParamName,
++                The parameter name;
++
++                char*                       pValue,
++                The string value buffer;
++
++                ULONG*                      pUlSize
++                The buffer of length of string value;
++                Usually size of 1023 will be used.
++                If it's not big enough, put required size here and return 1;
++
++    return:     0 if succeeded;
++                1 if short of buffer size; (*pUlSize = required size)
++                -1 if not supported.
++
++**********************************************************************/
++ULONG
++Ops_GetParamStringValue
++    (
++        ANSC_HANDLE                 hInsContext,
++        char*                       ParamName,
++        char*                       pValue,
++        ULONG*                      pUlSize
++    )
++{
++
++    if( AnscEqualString(ParamName, "LogsUploadStatus", TRUE))
++    {
++        /* collect value */
++	COSADmlUploadLogsStatus(NULL, pValue,pUlSize);
++        return 0;
++    }
++    /* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
++    return -1;
++}
++
++/**********************************************************************  
++
++    caller:     owner of this object 
++
++    prototype: 
++
++        BOOL
++        Ops_SetParamBoolValue
++            (
++                ANSC_HANDLE                 hInsContext,
++                char*                       ParamName,
++                BOOL                        bValue
++            );
++
++    description:
++
++        This function is called to set BOOL parameter value; 
++
++    argument:   ANSC_HANDLE                 hInsContext,
++                The instance handle;
++
++                char*                       ParamName,
++                The parameter name;
++
++                BOOL                        bValue
++                The updated BOOL value;
++
++    return:     TRUE if succeeded.
++
++**********************************************************************/
++BOOL
++Ops_SetParamBoolValue
++    (
++        ANSC_HANDLE                 hInsContext,
++        char*                       ParamName,
++        BOOL                        bValue
++    )
++{
++    BOOL                            bReturnValue;
++
++    if( AnscEqualString(ParamName, "UploadLogsNow", TRUE))
++    {
++
++	bReturnValue =
++        	COSADmlUploadLogsNow
++            	(
++                	(ANSC_HANDLE)NULL, 
++			bValue
++            	);
++
++
++    		if ( ! bReturnValue )
++    		{
++        		return TRUE;
++    		}
++    		else
++    		{
++        		/* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
++        		return FALSE;
++    		}
++    }
++    return FALSE;
++}
++
++
+ /***********************************************************************
+ 
+  APIs for Object:

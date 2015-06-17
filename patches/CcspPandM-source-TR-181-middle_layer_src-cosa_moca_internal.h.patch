@@ -1,0 +1,11 @@
+--- ./CcspPandM/source/TR-181/middle_layer_src/cosa_moca_internal.h
++++ ./CcspPandM/source/TR-181/middle_layer_src/cosa_moca_internal.h	2015-06-15 07:21:49.132341226 -0600
+@@ -74,6 +74,8 @@
+     
+     PCOSA_DML_MOCA_FLOW                     pMoCAFlowTable;
+     ULONG                                   ulMoCAFlowTableCount;
++
++    COSA_DML_MOCA_MESH			    MoCAMeshTable;
+ }_struct_pack_ ;
+ typedef struct _COSA_DML_MOCA_IF_FULL_TABLE COSA_DML_MOCA_IF_FULL_TABLE,  *PCOSA_DML_MOCA_IF_FULL_TABLE;
+ 
