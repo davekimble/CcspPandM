@@ -60,8 +60,8 @@
 /*
  *  simulation data -- IPv6 address/prefix of a single interface
  */
-static  COSA_DML_IP_V6ADDR          gIpv6Addr   = {1, "ipv6a-1",    TRUE, 1, 1, "", 0, 0, 1, "", "", "", FALSE};
-static  COSA_DML_IP_V6PREFIX        gIpv6Prefix = {1, "ipv6preA-1", TRUE, 1, 1, "", 0, 0, 1, 1,  "", "", TRUE, TRUE, "", ""};
+static  COSA_DML_IP_V6ADDR          gIpv6Addr   = {1, "ipv6a-1",    TRUE, 1, 1, "", 0, 0, 1, "", 1, "", "", FALSE, TRUE};
+static  COSA_DML_IP_V6PREFIX        gIpv6Prefix = {1, "ipv6preA-1", TRUE, 1, 1, "", 0, 0, 1, 1,  "", "", TRUE, TRUE, "", "", TRUE};
 
 /*
  *  IP Interface
