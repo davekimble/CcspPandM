@@ -1,0 +1,48 @@
+--- ./CcspPandM/source/TR-181/middle_layer_src/plugin_main_apis.c
++++ ./CcspPandM/source/TR-181/middle_layer_src/plugin_main_apis.c	2015-06-10 14:05:49.097030780 -0600
+@@ -172,7 +172,7 @@
+     pMyObject->Create            = CosaBackEndManagerCreate;
+     pMyObject->Remove            = CosaBackEndManagerRemove;
+     pMyObject->Initialize        = CosaBackEndManagerInitialize;
+-
++printf("-- %s %d\n", __func__, __LINE__);
+     /*pMyObject->Initialize   ((ANSC_HANDLE)pMyObject);*/
+ 
+     return  (ANSC_HANDLE)pMyObject;
+@@ -287,14 +287,21 @@
+     returnStatus = CosaDmlMlanInit((ANSC_HANDLE)pMyObject, &pMyObject->hMultiLan);
+     AnscTraceWarning(("  CosaDmlMlanInit -- status %d!\n", returnStatus));
+ 
+-#ifdef CONFIG_CISCO_HOTSPOT
++//#ifdef CONFIG_CISCO_HOTSPOT
++	
+     pMyObject->hGRE           = (ANSC_HANDLE)CosaGreCreate();
+     AnscTraceWarning(("  CosaGreCreate done!\n"));
++	//zqiu>>
++	printf("-- %s %d CosaGreTunnelCreate\n", __func__, __LINE__);
++    pMyObject->hTGRE       = (ANSC_HANDLE)CosaGreTunnelCreate();
++    AnscTraceWarning(("  CosaGreTunnelCreate done!\n"));	
++	//zqiu<<
+     pMyObject->hCGRE           = (ANSC_HANDLE)CosaCGreCreate();
+     AnscTraceWarning(("  CosaCGreCreate done!\n"));
+     pMyObject->hHotspot       = (ANSC_HANDLE)CosaHotspotCreate();
+     AnscTraceWarning(("  CosaHotspotCreate done!\n"));
+-#endif
++	
++//#endif
+ 
+ #if CONFIG_CISCO_FILE_TRANSFER
+     pMyObject->hFileTransfer  = (ANSC_HANDLE)CosaFileTransferCreate();
+@@ -521,6 +528,12 @@
+     {
+         CosaHotspotRemove((ANSC_HANDLE)pMyObject->hHotspot);
+     }
++	//zqiu>>
++	if ( pMyObject->hTGRE )
++    {		
++		CosaGreTunnelRemove((ANSC_HANDLE)pMyObject->hTGRE);
++    }
++	//zqiu<<
+ #endif
+ 
+ #if CONFIG_CISCO_TRUE_STATIC_IP

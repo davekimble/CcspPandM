@@ -1,0 +1,15 @@
+--- ./CcspPandM/source/TR-181/middle_layer_src/cosa_moca_dml.h
++++ ./CcspPandM/source/TR-181/middle_layer_src/cosa_moca_dml.h	2015-06-15 07:21:49.132341226 -0600
+@@ -462,4 +462,12 @@
+         ULONG*                      pUlSize
+     );
+ 
++BOOL
++MeshTable_GetParamUlongValue
++    (
++        ANSC_HANDLE                 hInsContext,
++        char*                       ParamName,
++        ULONG*                      pUlong
++    );
++
+ #endif

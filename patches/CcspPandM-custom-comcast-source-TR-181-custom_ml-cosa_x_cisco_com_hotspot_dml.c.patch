@@ -1,0 +1,36 @@
+--- ./CcspPandM/custom/comcast/source/TR-181/custom_ml/cosa_x_cisco_com_hotspot_dml.c
++++ ./CcspPandM/custom/comcast/source/TR-181/custom_ml/cosa_x_cisco_com_hotspot_dml.c	2015-05-20 13:29:09.944854221 -0600
+@@ -159,7 +159,7 @@
+ {
+     COSA_DML_HOTSPOT_ASSODEV        *assoDev = (COSA_DML_HOTSPOT_ASSODEV *)hInsContext;
+ 
+-    CosaDml_HsSsidAssoDevGetCfg(assoDev->SsidIns, assoDev->InstanceNumber, assoDev);
++   // CosaDml_HsSsidAssoDevGetCfg(assoDev->SsidIns, assoDev->InstanceNumber, assoDev);
+ 
+     if (AnscEqualString(ParamName, "Alias", TRUE))
+     {
+@@ -265,20 +265,20 @@
+ }
+ 
+ BOOL
+-HsAssoDev_GetParamUlongValue
++HsAssoDev_GetParamIntValue
+     (
+         ANSC_HANDLE                 hInsContext,
+         char*                       ParamName,
+-        ULONG*                      pUlong
++        int*                        pInt
+     )
+ {
+     COSA_DML_HOTSPOT_ASSODEV        *assoDev = (COSA_DML_HOTSPOT_ASSODEV *)hInsContext;
+ 
+-    CosaDml_HsSsidAssoDevGetCfg(assoDev->SsidIns, assoDev->InstanceNumber, assoDev);
++   // CosaDml_HsSsidAssoDevGetCfg(assoDev->SsidIns, assoDev->InstanceNumber, assoDev);
+ 
+     if (AnscEqualString(ParamName, "RSSILevel", TRUE))
+     {
+-        *pUlong = assoDev->RSSILevel;
++        *pInt = assoDev->RSSILevel;
+         return TRUE;
+     }
+ 

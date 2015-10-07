@@ -1,0 +1,64 @@
+--- ./CcspPandM/source/PandMSsp/ssp_main.c
++++ ./CcspPandM/source/PandMSsp/ssp_main.c	2015-04-22 14:22:31.178829008 -0600
+@@ -23,6 +23,7 @@
+ #include "ssp_global.h"
+ #include "stdlib.h"
+ #include "ccsp_dm_api.h"
++#include "pcdapi.h"
+ //#include <docsis_ext_interface.h>
+ 
+ PDSLH_CPE_CONTROLLER_OBJECT     pDslhCpeController      = NULL;
+@@ -33,6 +34,7 @@
+ PCCSP_CCD_INTERFACE             pPnmCcdIf               = (PCCSP_CCD_INTERFACE        )NULL;
+ PCCC_MBI_INTERFACE              pPnmMbiIf               = (PCCC_MBI_INTERFACE         )NULL;
+ BOOL                            g_bActive               = FALSE;
++extern  ANSC_HANDLE                     bus_handle;
+ 
+ int  cmd_dispatch(int  command)
+ {
+@@ -279,6 +281,16 @@
+         CcspTraceInfo(("SIGKILL received!\n"));
+         exit(0);
+     }
++	else if ( sig == SIGALRM ) 
++	{
++
++    	signal(SIGALRM, sig_handler); /* reset it to this function */
++    	CcspTraceInfo(("SIGALRM received!\n"));
++		RDKLogEnable = GetLogInfo(bus_handle,"eRT.","Device.LogAgent.X_RDKCENTRAL-COM_LoggerEnable");
++		RDKLogLevel = (char)GetLogInfo(bus_handle,"eRT.","Device.LogAgent.X_RDKCENTRAL-COM_LogLevel");
++		PAM_RDKLogLevel = GetLogInfo(bus_handle,"eRT.","Device.LogAgent.X_RDKCENTRAL-COM_PAM_LogLevel");
++		PAM_RDKLogEnable = (char)GetLogInfo(bus_handle,"eRT.","Device.LogAgent.X_RDKCENTRAL-COM_PAM_LoggerEnable");
++	}
+     else {
+     	/* get stack trace first */
+     	_print_stack_backtrace();
+@@ -402,7 +414,6 @@
+     if (is_core_dump_opened())
+     {
+         signal(SIGUSR1, sig_handler);
+-        signal(SIGPIPE, SIG_IGN);
+         CcspTraceWarning(("Core dump is opened, do not catch signal\n"));
+     }
+     else
+@@ -420,11 +431,19 @@
+         signal(SIGILL, sig_handler);
+         signal(SIGQUIT, sig_handler);
+         signal(SIGHUP, sig_handler);
+-        signal(SIGPIPE, SIG_IGN);
++		signal(SIGALRM, sig_handler);
+     }
+ 
++
++    printf("Registering PCD exception handler\n");
++    PCD_api_register_exception_handlers( argv[0], NULL );
++
+     cmd_dispatch('e');
+ 
++	RDKLogEnable = GetLogInfo(bus_handle,g_Subsystem,"Device.LogAgent.X_RDKCENTRAL-COM_LoggerEnable");
++	RDKLogLevel = (char)GetLogInfo(bus_handle,g_Subsystem,"Device.LogAgent.X_RDKCENTRAL-X_RDKCENTRAL-COM_LogLevel");
++	PAM_RDKLogLevel = GetLogInfo(bus_handle,g_Subsystem,"Device.LogAgent.X_RDKCENTRAL-COM_PAM_LogLevel");
++	PAM_RDKLogEnable = (char)GetLogInfo(bus_handle,g_Subsystem,"Device.LogAgent.X_RDKCENTRAL-COM_PAM_LoggerEnable");
+     // printf("Calling Docsis\n");
+ 
+     // ICC_init();

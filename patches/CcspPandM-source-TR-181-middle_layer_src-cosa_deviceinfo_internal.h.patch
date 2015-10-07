@@ -1,0 +1,16 @@
+--- ./CcspPandM/source/TR-181/middle_layer_src/cosa_deviceinfo_internal.h
++++ ./CcspPandM/source/TR-181/middle_layer_src/cosa_deviceinfo_internal.h	2015-04-22 14:22:31.178829008 -0600
+@@ -66,6 +66,13 @@
+ _COSA_DATAMODEL_DEVICEINFO_CLASS_CONTENT
+ {
+     COSA_DATAMODEL_DEVICEINFO_CLASS_CONTENT
++    
++#ifdef CONFIG_INTERNET2.0
++    BOOL		bWiFiConfigued;	
++    BOOL		bCloudCapable;	
++    BOOL		bCloudEnable;				    
++    CHAR		WebURL[64];
++#endif		               		    
+ }
+ COSA_DATAMODEL_DEVICEINFO, *PCOSA_DATAMODEL_DEVICEINFO;
+ 

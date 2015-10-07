@@ -1,0 +1,11 @@
+--- ./CcspPandM/source/TR-181/middle_layer_src/cosa_users_dml.h
++++ ./CcspPandM/source/TR-181/middle_layer_src/cosa_users_dml.h	2015-05-20 13:29:09.944854221 -0600
+@@ -53,6 +53,8 @@
+ #ifndef  _COSA_USERS_DML_H
+ #define  _COSA_USERS_DML_H
+ 
++#include "mso_mgmt_hal.h"
++
+ /***********************************************************************
+ 
+  APIs for Object:

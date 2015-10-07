@@ -1,0 +1,33 @@
+--- ./CcspPandM/source/TR-181/include/cosa_moca_apis.h
++++ ./CcspPandM/source/TR-181/include/cosa_moca_apis.h	2015-06-15 07:21:49.132341226 -0600
+@@ -276,6 +276,15 @@
+ 
+ typedef struct _COSA_DML_MOCA_FLOW COSA_DML_MOCA_FLOW, *PCOSA_DML_MOCA_FLOW;
+ 
++struct _COSA_DML_MOCA_MESH
++{
++    ULONG                           MeshTxNodeId;
++    ULONG                           MeshRxNodeId;
++    ULONG                           MeshPHYTxRate;
++}_struct_pack_;
++
++typedef struct _COSA_DML_MOCA_MESH COSA_DML_MOCA_MESH, *PCOSA_DML_MOCA_MESH;
++
+ struct _COSA_DML_MOCA_ASSOC_DEVICE
+ {
+     UCHAR                           MACAddress[18];
+@@ -466,7 +475,13 @@
+         PULONG                           pCount
+     );
+ 
+-
++ANSC_STATUS
++CosaDmlMocaIfMeshTableGetTable
++    (
++        ANSC_HANDLE                      hContext,
++        ULONG                            ulInterfaceIndex,
++        PCOSA_DML_MOCA_MESH              pConf
++    );
+ 
+ 
+ 

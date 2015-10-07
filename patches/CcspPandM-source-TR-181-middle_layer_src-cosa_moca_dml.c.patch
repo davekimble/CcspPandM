@@ -1,0 +1,85 @@
+--- ./CcspPandM/source/TR-181/middle_layer_src/cosa_moca_dml.c
++++ ./CcspPandM/source/TR-181/middle_layer_src/cosa_moca_dml.c	2015-06-15 07:21:49.132341226 -0600
+@@ -2227,6 +2227,82 @@
+     return -1;
+ }
+ 
++/**********************************************************************  
++
++    caller:     owner of this object 
++
++    prototype: 
++
++        BOOL
++        MeshTable_GetParamUlongValue
++            (
++                ANSC_HANDLE                 hInsContext,
++                char*                       ParamName,
++                ULONG*                      puLong
++            );
++
++    description:
++
++        This function is called to retrieve ULONG parameter value; 
++
++    argument:   ANSC_HANDLE                 hInsContext,
++                The instance handle;
++
++                char*                       ParamName,
++                The parameter name;
++
++                ULONG*                      puLong
++                The buffer of returned ULONG value;
++
++    return:     TRUE if succeeded.
++
++**********************************************************************/
++
++BOOL
++MeshTable_GetParamUlongValue
++    (
++        ANSC_HANDLE                 hInsContext,
++        char*                       ParamName,
++        ULONG*                      puLong
++    )
++{
++
++    PCOSA_DML_MOCA_IF_FULL_TABLE    pMoCAIfFullTable = (PCOSA_DML_MOCA_IF_FULL_TABLE)hInsContext;
++
++     CosaDmlMocaIfMeshTableGetTable(NULL, pMoCAIfFullTable->MoCAIfFull.Cfg.InstanceNumber-1, &pMoCAIfFullTable->MoCAMeshTable);
++
++     //check the parameter name and return the corresponding value 
++    if( AnscEqualString(ParamName, "MeshTxNodeId", TRUE))
++    {
++        /* collect value */
++        *puLong = pMoCAIfFullTable->MoCAMeshTable.MeshTxNodeId;
++        
++        return TRUE;
++    }
++
++    if( AnscEqualString(ParamName, "MeshRxNodeId", TRUE))
++    {
++        /* collect value */
++        *puLong = pMoCAIfFullTable->MoCAMeshTable.MeshRxNodeId;
++        
++        return TRUE;
++    }
++
++    if( AnscEqualString(ParamName, "MeshPHYTxRate", TRUE))
++    {
++        /* collect value */
++        *puLong = pMoCAIfFullTable->MoCAMeshTable.MeshPHYTxRate;
++        
++        return TRUE;
++    }
++    
++    /* CcspTraceWarning(("Unsupported parameter '%s'\n", ParamName)); */
++    return FALSE;
++
++}
++
++
++
+ /***********************************************************************
+ 
+  APIs for Object:

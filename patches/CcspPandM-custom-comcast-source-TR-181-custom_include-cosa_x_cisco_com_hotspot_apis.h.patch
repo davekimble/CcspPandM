@@ -1,0 +1,11 @@
+--- ./CcspPandM/custom/comcast/source/TR-181/custom_include/cosa_x_cisco_com_hotspot_apis.h
++++ ./CcspPandM/custom/comcast/source/TR-181/custom_include/cosa_x_cisco_com_hotspot_apis.h	2015-04-22 14:22:31.170825008 -0600
+@@ -33,7 +33,7 @@
+ 
+     char                        MACAddress[18];
+     char                        Hostname[257];
+-    ULONG                       RSSILevel;
++    int                         RSSILevel;
+     char                        IPv4Address[17];
+     char                        DHCPv4Status[64];
+     char                        IPv6Address[64];

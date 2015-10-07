@@ -1,0 +1,12 @@
+--- ./CcspPandM/source/TR-181/include/cosa_x_cisco_com_devicecontrol_apis.h
++++ ./CcspPandM/source/TR-181/include/cosa_x_cisco_com_devicecontrol_apis.h	2015-04-22 14:22:31.178829008 -0600
+@@ -451,6 +451,9 @@
+     );
+ 
+ ANSC_STATUS
++CosaDmlDcSetReInitCmMac ();
++
++ANSC_STATUS
+ CosaDmlDcGetDeviceConfigStatus
+     (
+         ANSC_HANDLE                 hContext,

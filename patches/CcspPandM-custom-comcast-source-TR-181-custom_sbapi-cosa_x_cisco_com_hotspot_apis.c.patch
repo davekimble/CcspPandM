@@ -1,0 +1,65 @@
+--- ./CcspPandM/custom/comcast/source/TR-181/custom_sbapi/cosa_x_cisco_com_hotspot_apis.c
++++ ./CcspPandM/custom/comcast/source/TR-181/custom_sbapi/cosa_x_cisco_com_hotspot_apis.c	2015-05-20 13:29:09.944854221 -0600
+@@ -51,7 +51,7 @@
+ struct hs_client {
+     char                mac[18];
+     char                hostname[18];
+-    unsigned int        rssi;
++    int                 rssi;
+     char                v4addr[16];
+     char                dh4_status[64];
+     char                v6addr[64];
+@@ -157,6 +157,34 @@
+     return;
+ }
+ 
++static ULONG HsSsidUpdateTime = 0;
++#define TIME_NO_NEGATIVE(x) ((long)(x) < 0 ? 0 : (x))
++#define COSA_DML_HS_SSID_ACCESS_INTERVAL     8
++
++BOOL
++Hs_Ssid_IsUpdated()
++{
++
++	if ( HsSsidUpdateTime == 0 ) 
++    {
++        HsSsidUpdateTime = AnscGetTickInSeconds();
++
++        return TRUE;
++    }
++    
++    if ( HsSsidUpdateTime >= TIME_NO_NEGATIVE(AnscGetTickInSeconds() - COSA_DML_HS_SSID_ACCESS_INTERVAL ) )
++    {
++        return FALSE;
++    }
++    else 
++    {
++        HsSsidUpdateTime = AnscGetTickInSeconds();
++
++        return TRUE;
++    }
++    return TRUE;
++}
++
+ static int load_hs_ssid(void)
+ {
+     struct hs_ssid *hsssid;
+@@ -172,6 +200,10 @@
+     parameterValStruct_t valStru;
+     int valSize;
+ 
++	if(!Hs_Ssid_IsUpdated()) {
++		return 0;
++	}
++
+     if (!g_snstat) {
+         AnscTraceError(("Snooper shm not ready\n"));
+         return -1;
+@@ -286,7 +318,6 @@
+     char ifs[1024];
+     char *tok, *delim, *sp, *from;
+     ULONG cnt;
+-    
+     if (load_hs_ssid() != 0) {
+         AnscTraceError(("Fail to load HHS SSID list\n"));
+         return 0;
