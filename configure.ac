@@ -31,6 +31,10 @@ AC_C_INLINE
 AC_FUNC_MALLOC
 
 AC_CONFIG_FILES(
+	source-arm/TR-181/board_sbapi/Makefile
+	source-arm/TR-181/board_ml/Makefile
+	source-arm/TR-181/Makefile
+	source-arm/Makefile
 	source-pc/TR-181/board_sbapi/Makefile
 	source-pc/TR-181/Makefile
 	source-pc/Makefile
