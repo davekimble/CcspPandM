@@ -84,7 +84,7 @@
 #include <utctx_api.h>
 #include <ulog.h>
 #include <syscfg/syscfg.h>
-#include <utapi/utapi_tr_dhcp.h>
+/* #include <utapi/utapi_tr_dhcp.h> */
 #include "dhcpv4c_api.h"
 #include <syslog.h>
 #include "cosa_moca_apis.h"
