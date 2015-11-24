@@ -323,7 +323,7 @@ Arguments:
 Return:
 The pointer to the array of hosts, allocated by callee. If no entry is found, NULL is returned.
   **********************************************************/
-ANSC_STATUS
+ANSC_HANDLE
 CosaDmlHostsGetHosts
     (
         ANSC_HANDLE                 hContext,

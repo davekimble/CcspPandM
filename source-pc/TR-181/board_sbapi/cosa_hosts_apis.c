@@ -154,7 +154,7 @@ CosaDmlHostsInit
 
     prototype:
 
-        ANSC_STATUS
+        ANSC_HANDLE
         CosaDmlHostsGetHosts
             (
                 ANSC_HANDLE                 hContext,
@@ -173,7 +173,7 @@ CosaDmlHostsInit
 
 **********************************************************************/
 
-ANSC_STATUS
+ANSC_HANDLE
 CosaDmlHostsGetHosts
     (
         ANSC_HANDLE                 hContext,
@@ -193,7 +193,7 @@ CosaDmlHostsGetHosts
 
     *pulCount = 2;
 
-    return pHostEntry;
+    return (ANSC_HANDLE) pHostEntry;
 }
 
 
