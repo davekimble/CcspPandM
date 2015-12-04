@@ -139,7 +139,8 @@ CosaRoutingCreate
     return:     operation status.
 
 **********************************************************************/
-
+/* explicit prototype of function from CcspPandM/source-pc/TR-181/board_sbapi/cosa_routing_apis.c to eliminate 64-bit errors*/
+PCOSA_DML_STATICROUTE_CFG CosaDmlStaticRouteGetEntries(ANSC_HANDLE, PULONG);
 ANSC_STATUS
 CosaRoutingInitialize
     (

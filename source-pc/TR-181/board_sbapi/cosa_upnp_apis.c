@@ -108,7 +108,7 @@ ANSC_STATUS
 CosaDmlUpnpDevGetAdvPeriod
     (
         ANSC_HANDLE                 hContext,
-        PULONG                     *val
+        PULONG                     val
     )
 {
     *val = g_AdvPeriod;
@@ -132,7 +132,7 @@ ANSC_STATUS
 CosaDmlUpnpDevGetTTL
     (
         ANSC_HANDLE                 hContext,
-        PULONG                     *val
+        PULONG                     val
     )
 {
     *val = g_TTL;

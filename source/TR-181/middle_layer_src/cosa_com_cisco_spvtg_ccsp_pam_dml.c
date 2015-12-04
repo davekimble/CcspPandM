@@ -140,7 +140,7 @@ Pam_GetFirstIpInterfaceObjectName
     // Hard coded, RTian 09/20/2013
     {
         if(bUpstream) {
-            pulObjNameSize = sprintf(pIfObjName, "Device.IP.Interface.1.") + 1;
+            *pulObjNameSize = sprintf(pIfObjName, "Device.IP.Interface.1.") + 1;
             //        else pulObjNameSize = sprintf(pIfObjName, "Device.IP.Interface.4.") + 1;
             return ANSC_STATUS_SUCCESS;
         }

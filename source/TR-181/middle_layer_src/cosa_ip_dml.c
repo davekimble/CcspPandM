@@ -1097,6 +1097,8 @@ Interface2_GetParamIntValue
     return:     TRUE if succeeded.
 
 **********************************************************************/
+/* explicit prototype of function from CcspPandM/source-arm/TR-181/board_sbapi/cosa_ip_apis.c to eliminate 64-bit errors*/
+PCOSA_DML_IP_IF_INFO CosaDmlIpIfGetEntry2(ANSC_HANDLE, ULONG);
 BOOL
 Interface2_GetParamUlongValue
     (
