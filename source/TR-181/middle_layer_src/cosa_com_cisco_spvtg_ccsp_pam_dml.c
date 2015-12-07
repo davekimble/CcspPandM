@@ -167,7 +167,7 @@ Pam_GetFirstIpInterfaceObjectName
             }
             else
             {
-                ulIndex     = EnvIndex;
+                ulIndex     = ulEnvIndex;
             }
         }
         ulInstNum = CosaGetInstanceNumberByIndex("Device.IP.Interface.", ulIndex);
